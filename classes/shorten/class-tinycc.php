@@ -2,6 +2,10 @@
 /**
  * TinyCC API shortener class.
  *
+ * TinyCC API documentation: https://tiny.cc/api-docs
+ * To use TinyCC, create an account and generate API code
+ * Note: free version has a limit of five 5 concurrent requests from a single IP address
+ *
  * @package UtmDotCodes
  */
 
