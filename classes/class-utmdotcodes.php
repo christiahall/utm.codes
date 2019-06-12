@@ -560,7 +560,7 @@ class UtmDotCodes {
 											esc_html( $value )
 										);
 									},
-									[ 'None', 'Bitly', 'Rebrandly' ]
+									[ 'None', 'Bitly', 'Rebrandly', 'TinyCC' ]
 								);
 
 								print( '</select>' );
@@ -948,6 +948,13 @@ class UtmDotCodes {
 				);
 				break;
 
+			case 'tinycc':
+				require_once 'shorten/class-tinycc.php';
+				$shortener = new \UtmDotCodes\TinyCC(
+					get_option( self::POST_TYPE . '_apikey' )
+				);
+				break;
+
 			case 'none':
 			default:
 				break;
@@ -1080,8 +1087,9 @@ class UtmDotCodes {
 
 				$is_bitly     = 'bit.ly' === wp_parse_url( $short_url, PHP_URL_HOST );
 				$is_rebrandly = 'rebrand.ly' === wp_parse_url( $short_url, PHP_URL_HOST );
+				$is_tinycc     = 'tiny.cc' === wp_parse_url( $short_url, PHP_URL_HOST );
 
-				if ( $is_bitly || $is_rebrandly ) {
+				if ( $is_bitly || $is_rebrandly || $is_tinycc ) {
 					printf(
 						'<a href="%s+" target="_blank"><i class="fas fa-chart-line"></i> %s</a>',
 						esc_url_raw( $short_url ),
@@ -1742,6 +1750,28 @@ class UtmDotCodes {
 					'message' => esc_html__( 'Rebrandly API experienced an error when shortening the link, please try again later.', 'utm-dot-codes' ),
 				];
 				break;
+
+				/**
+				 * TinyCC
+				 */
+			 case 101:
+				 $error_message = [
+					 'style'   => 'notice-error',
+					 'message' => esc_html__( 'Unable to connect to Bitly API to shorten url. Please try again later.', 'utm-dot-codes' ),
+				 ];
+				 break;
+				case 4032:
+					$error_message = [
+						'style'   => 'notice-error',
+						'message' => esc_html__( 'TinyCC API responded with unauthorized error. API Key is invalid or rate limit exceeded.', 'utm-dot-codes' ),
+					];
+					break;
+				case 501:
+					$error_message = [
+						'style'   => 'notice-error',
+						'message' => esc_html__( 'TinyCC API experienced an error when shortening the link, please try again later.', 'utm-dot-codes' ),
+					];
+					break;
 		}
 
 		return apply_filters( 'utmdc_error_message', $error_message, $error_code );
