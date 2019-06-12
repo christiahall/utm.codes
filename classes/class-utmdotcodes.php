@@ -1751,27 +1751,27 @@ class UtmDotCodes {
 				];
 				break;
 
-				/**
-				 * TinyCC
-				 */
-			 case 101:
-				 $error_message = [
-					 'style'   => 'notice-error',
-					 'message' => esc_html__( 'Unable to connect to Bitly API to shorten url. Please try again later.', 'utm-dot-codes' ),
-				 ];
-				 break;
-				case 4032:
-					$error_message = [
-						'style'   => 'notice-error',
-						'message' => esc_html__( 'TinyCC API responded with unauthorized error. API Key is invalid or rate limit exceeded.', 'utm-dot-codes' ),
-					];
-					break;
-				case 501:
-					$error_message = [
-						'style'   => 'notice-error',
-						'message' => esc_html__( 'TinyCC API experienced an error when shortening the link, please try again later.', 'utm-dot-codes' ),
-					];
-					break;
+			/**
+			 * TinyCC
+			 */
+			case 101:
+			 $error_message = [
+				 'style'   => 'notice-error',
+				 'message' => esc_html__( 'Unable to connect to TinyCC API to shorten url. Please try again later.', 'utm-dot-codes' ),
+			 ];
+			 break;
+			case 4032:
+				$error_message = [
+					'style'   => 'notice-error',
+					'message' => esc_html__( 'TinyCC API responded with unauthorized error. API Key is invalid or rate limit exceeded.', 'utm-dot-codes' ),
+				];
+				break;
+			case 501:
+				$error_message = [
+					'style'   => 'notice-error',
+					'message' => esc_html__( 'TinyCC API experienced an error when shortening the link, please try again later.', 'utm-dot-codes' ),
+				];
+				break;
 		}
 
 		return apply_filters( 'utmdc_error_message', $error_message, $error_code );
